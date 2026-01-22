@@ -1,0 +1,140 @@
+@startuml
+
+title "Domain Class Diagram - PeluGest"
+
+class Appointment {
+    - id: string 
+    - startDateTime: Date
+    - estimatedEndDateTime: Date
+}
+
+class Client {
+    - id: string
+    - name: string
+    - lastname: string
+    - mobilePhoneNumber: string
+    - landlinePhoneNumber: string
+}
+
+interface AppointmentStatus {
+    - id: string
+    - name: string
+
+    + start(appointment: Appointment): void
+    + attend(appointment: Appointment): void
+    + miss(appointment: Appointment): void
+    + cancel(appointment: Appointment): void
+    + getStatus(): string
+}
+
+class ReservedState {
+    + start(appointment: Appointment): void
+    + attend(appointment: Appointment): void
+    + miss(appointment: Appointment): void
+    + cancel(appointment: Appointment): void
+    + getStatus(): string
+} 
+
+class InProgressState {
+    + start(appointment: Appointment): void
+    + attend(appointment: Appointment): void
+    + miss(appointment: Appointment): void
+    + cancel(appointment: Appointment): void
+    + getStatus(): string
+}
+
+class AttendedState {
+    + start(appointment: Appointment): void
+    + attend(appointment: Appointment): void
+    + miss(appointment: Appointment): void
+    + cancel(appointment: Appointment): void
+    + getStatus(): string
+} 
+
+class MissedState {
+    + start(appointment: Appointment): void
+    + attend(appointment: Appointment): void
+    + miss(appointment: Appointment): void
+    + cancel(appointment: Appointment): void
+    + getStatus(): string
+}
+
+class CancelledState {
+    + start(appointment: Appointment): void
+    + attend(appointment: Appointment): void
+    + miss(appointment: Appointment): void
+    + cancel(appointment: Appointment): void
+    + getStatus(): string
+} 
+
+class AppointmentDetail {
+    - id: string
+    - price: number
+    - durationMin: number
+}
+
+class Service {
+    - id: string 
+    - name: string
+    - description: string
+    - estimatedDurationMin: number
+    - basePrice: number
+}
+
+class Product {
+    - id: string
+    - name: string
+    - price: number
+}
+
+class ServiceProductRequirement {
+    - id: string
+    - standardAmountMl: number
+}
+
+class StockProduct {
+    - currentAmountMl: number
+    - minimumStockMl: number
+}
+
+class User {
+    - id: string
+    - email: string
+    - password: string
+}
+
+enum Role {
+    ADMIN = "ADMIN", 
+    HAIRDRESSER = "HAIRDRESSER"
+}
+
+enum RecordStatus {
+    ACTIVE = "ACTIVE",
+    INACTIVE = "INACTIVE",
+    DELETED = "DELETED"
+}
+
+
+Appointment --> "1" Client : "client"
+Appointment --> "1" User : "hairdresser"
+Appointment --> "1" AppointmentStatus : "status"
+Appointment o-- "1, *" AppointmentDetail : "details"
+
+AppointmentStatus <|-- ReservedState
+AppointmentStatus <|-- InProgressState
+AppointmentStatus <|-- AttendedState
+AppointmentStatus <|-- MissedState
+AppointmentStatus <|-- CancelledState 
+
+AppointmentDetail --> "1" Service : "service"
+
+Service --> "0, *" ServiceProductRequirement : "serviceProductRequirement"
+
+Product --> "0, *" ServiceProductRequirement : "serviceProductRequirement"
+Product --> "1" StockProduct : "stock"
+Product --> "1" RecordStatus : "status"
+
+User --> "1" Role : "role"
+User --> "1" RecordStatus : "status"
+
+@enduml
