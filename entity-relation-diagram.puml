@@ -1,0 +1,94 @@
+@startuml
+
+title "Entity-Relation Diagram - PeluGest"
+
+
+entity Appointment {
+    PK - id
+    - startDateTime
+    - estimatedEndDateTime
+    - idClient: FK 
+    - idAppointmentStatus: FK 
+    - idHairdresser: FK 
+}
+
+entity Client {
+    PK - id
+    - name
+    - lastname 
+    - mobilePhoneNumber
+    - landlinePhoneNumber
+}
+
+entity AppointmentStatus {
+    PK - id 
+    - name 
+}
+
+entity AppointmentDetail {
+    PK - id
+    - idAppointment: FK
+    - idService: FK
+    - price
+    - durationMin 
+}
+
+entity Service {
+    PK - id
+    - name
+    - description
+    - estimatedDurationMin
+    - basePrice
+    - status : RecordStatus
+}
+
+entity Product {
+    PK - id 
+    - name
+    - price 
+    - idStatus: FK 
+    - status : RecordStatus
+}
+
+entity StockProduct {
+    PK - idProduct: FK  
+    - currentAmountMl
+    - minimumStockMl
+}
+
+
+entity ServiceProductRequirement {
+    PK - idService: FK
+    PK - idProduct: FK 
+    - standardAmountMl 
+}
+
+entity User {
+    PK - id
+    - email
+    - password 
+    - idRole: FK
+    - status : RecordStatus
+}
+
+entity Role {
+    PK - id
+    - name 
+}
+
+Appointment |-- Client
+Appointment |-- AppointmentStatus
+Appointment |-- User 
+Appointment |-- AppointmentStatus
+
+AppointmentDetail |-- Appointment
+AppointmentDetail |-- Service
+
+StockProduct |-- Product 
+
+User |-- Role 
+
+ServiceProductRequirement |-- Service
+ServiceProductRequirement |-- Product 
+
+@enduml 
