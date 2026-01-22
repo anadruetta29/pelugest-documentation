@@ -65,6 +65,8 @@ entity ServiceProductRequirement {
 
 entity User {
     PK - id
+    - name
+    - lastname
     - email
     - password 
     - idRole: FK
