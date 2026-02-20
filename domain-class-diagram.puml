@@ -11,7 +11,7 @@ class Appointment {
 class Client {
     - id: string
     - name: string
-    - lastname: string
+    - surname: string
     - mobilePhoneNumber: number
     - landlinePhoneNumber: number
 }
@@ -97,10 +97,23 @@ class StockProduct {
     - minimumStockMl: number
 }
 
+class StockMovement {
+    - id: string
+    - quantityMl: number
+    - type: StockMovementType
+    - date: Date
+}
+
+enum StockMovementType {
+    IN = "IN",       
+    OUT = "OUT",     
+    ADJUSTMENT = "ADJUSTMENT"
+}
+
 class User {
     - id: string
     - name: string
-    - lastname: string
+    - surname: string
     - email: string
     - password: string
 }
